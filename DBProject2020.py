@@ -10,4 +10,8 @@ mydb = mysql.connector.connect(
     passwd="root"
 )
 
-print(mydb)
+mycursor = mydb.cursor()
+
+mycursor.execute("CREATE DATABASE IF NOT EXISTS aircraftStorage")
+mycursor.execute("CREATE TABLE IF NOT EXISTS aircraft (reg VARCHAR(10) NOT NULL, maker VARCHAR(25), "
+                 "series VARCHAR(25), price INTEGER(20), PRIMARY KEY (reg))")
