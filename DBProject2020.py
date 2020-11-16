@@ -58,6 +58,36 @@ def mainMenu():
     return userInput
 
 
+def loginMenu():
+    """
+    Print out the login screen for the user to input name and password to verified if the name or password
+    is in the database or not
+    """
+    isUser = False
+
+    while True:
+        name = input("Name: ")
+        password = input("Password: ")
+
+        userData = open('loginData.txt', 'r')
+        data = userData.read().splitlines()
+
+        userName, userPass = data[:2]
+
+        if name == userName and password == userPass:
+            print("Welcome " + userName)
+            isUser = True
+
+        else:
+            print("Module Record System - Login Failed")
+
+    return isUser
+
+
+def loadDatabase():
+    print()
+
+
 def main():
     initDatabase()
 
@@ -65,7 +95,10 @@ def main():
         mainMenuInput = mainMenu()
 
         if mainMenuInput == 1:
-            print()
+            isUser = loginMenu()
+
+            if isUser == True:
+                loadDatabase()
 
         if mainMenuInput == 2:
             print()
