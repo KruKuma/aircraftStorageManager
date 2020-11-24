@@ -183,6 +183,28 @@ def removeAircraft():
 
 
 def updateAircraft():
+    print("Please enter the registration number of the aircraft you want to remove")
+    reg = input("Registration No.:")
+    print("Select what you want to update")
+    userInput = checkForNum("1. Maker"
+                            "2. Series"
+                            "3. Price")
+
+    if userInput == 1:
+        maker = input("New Maker:")
+        sql = f"UPDATE student SET maker = {maker} WHERE reg = {reg}"
+
+    elif userInput == 2:
+        series = input("New Series:")
+        sql = f"UPDATE student SET series = {series} WHERE reg = {reg}"
+
+    elif userInput == 3:
+        price = input("New Price:")
+        sql = f"UPDATE student SET price = {price} WHERE reg = {reg}"
+
+    mycursor.execute(sql)
+
+    mydb.commit()
 
 
 def main():
