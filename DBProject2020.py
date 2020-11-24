@@ -157,6 +157,7 @@ def displayAircraft():
 
 
 def addAircraft():
+    print("Please enter the information of the aircraft")
     sqlFormula = "INSERT INTO aircraft VALUES (%s, %s, %s, %s)"
 
     reg = input("Registration No.:")
@@ -172,6 +173,13 @@ def addAircraft():
 
 
 def removeAircraft():
+    print("Please enter the registration number of the aircraft you want to remove")
+    reg = input("Registration No.:")
+    sql = f"DELETE FROM aircraft WHERE {reg}"
+
+    mycursor.execute(sql)
+
+    mydb.commit()
 
 
 def updateAircraft():
