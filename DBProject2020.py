@@ -4,19 +4,26 @@
 
 import mysql.connector
 
-
 mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        passwd="root",
-        database="aircraftStorage"
-    )
+    host="localhost",
+    user="root",
+    passwd="root",
+    database="aircraftStorage"
+)
 
 mycursor = mydb.cursor()
 
 mycursor.execute("CREATE DATABASE IF NOT EXISTS aircraftStorage")
 mycursor.execute("CREATE TABLE IF NOT EXISTS aircraft (reg VARCHAR(10) NOT NULL, maker VARCHAR(25), "
-                "series VARCHAR(25), price INTEGER(20), PRIMARY KEY (reg))")
+                 "series VARCHAR(25), price INTEGER(20), PRIMARY KEY (reg))")
+
+
+def writeLine():
+    """
+    Function for printing out lines
+    :return:
+    """
+    print("-" * 35)
 
 
 def checkForNum(prompt):
@@ -36,9 +43,8 @@ def checkForNum(prompt):
 
 
 def mainMenu():
+    writeLine()
     print("Main Menu of Plane Storage System - Input an option")
-
-    res = 0
 
     while True:
         userInput = checkForNum("1. Manage the storage system"
@@ -67,6 +73,7 @@ def mainMenu():
 
 
 def loginOption():
+    writeLine()
     print("Please login or register an account")
     while True:
         userOption = checkForNum("1. Login - existing account"
@@ -92,8 +99,8 @@ def loginMenu():
     Print out the login screen for the user to input name and password to verified if the name or password
     is in the database or not
     """
-    isUser = False
 
+    writeLine()
     print("Welcome to our Aircraft Storage System"
           "\nPlease enter your user information")
 
@@ -123,6 +130,7 @@ def loginMenu():
 
 
 def userRegMenu():
+    writeLine()
     username = input("Username:")
     password = input("Password:")
 
@@ -132,7 +140,7 @@ def userRegMenu():
 
 
 def manageMenu():
-
+    writeLine()
     while True:
         userInput = checkForNum("1. Display Aircraft"
                                 "\n2. Add Aircraft"
@@ -161,6 +169,7 @@ def manageMenu():
 
 
 def displayAircraft():
+    writeLine()
     mycursor.execute("SELECT * FROM aircraft")
 
     result = mycursor.fetchall()
@@ -170,6 +179,7 @@ def displayAircraft():
 
 
 def addAircraft():
+    writeLine()
     print("Please enter the information of the aircraft")
     sqlFormula = "INSERT INTO aircraft VALUES (%s, %s, %s, %s)"
 
@@ -186,41 +196,47 @@ def addAircraft():
 
 
 def removeAircraft():
+    writeLine()
     print("Please enter the registration number of the aircraft you want to remove")
     reg = input("Registration No.:")
     sql = "DELETE FROM aircraft WHERE reg= %s"
-    mycursor.execute(sql, reg)
+    remove = reg
+    mycursor.execute(sql, remove)
 
     mydb.commit()
 
 
 def updateAircraft():
-    print("Please enter the registration number of the aircraft you want to remove")
-
+    writeLine()
     while True:
-        reg = input("Registration No.:")
         print("Select what you want to update")
         userInput = checkForNum("1. Maker"
-                                "2. Series"
-                                "3. Price"
-                                "4. Exit")
+                                "\n2. Series"
+                                "\n3. Price"
+                                "\n4. Exit"
+                                "\n>>")
+        print("Please enter the registration number of the aircraft you want to update")
+        reg = input("Registration No.:")
 
         if userInput == 1:
             maker = input("New Maker:")
-            sql = "UPDATE student SET maker = %s WHERE reg = %s"
-            mycursor.execute(sql, maker, reg)
+            sql = "UPDATE aircraft SET maker= %s WHERE reg= %s"
+            update = (maker, reg)
+            mycursor.execute(sql, update)
             mydb.commit()
 
         elif userInput == 2:
             series = input("New Series:")
-            sql = "UPDATE student SET series = %s WHERE reg = %s"
-            mycursor.execute(sql, series, reg)
+            sql = "UPDATE aircraft SET series= %s WHERE reg= %s"
+            update = (series, reg)
+            mycursor.execute(sql, update)
             mydb.commit()
 
         elif userInput == 3:
             price = input("New Price:")
-            sql = "UPDATE student SET price = %s WHERE reg = %s"
-            mycursor.execute(sql, price, reg)
+            sql = "UPDATE aircraft SET price =%s WHERE reg =%s"
+            update = (price, reg)
+            mycursor.execute(sql, update)
             mydb.commit()
 
         elif userInput == 4:
@@ -231,7 +247,6 @@ def updateAircraft():
 
 
 def main():
-
     while True:
         mainMenuInput = mainMenu()
 
