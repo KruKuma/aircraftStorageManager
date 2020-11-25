@@ -38,6 +38,8 @@ def checkForNum(prompt):
 def mainMenu():
     print("Main Menu of Plane Storage System - Input an option")
 
+    res = 0
+
     while True:
         userInput = checkForNum("1. Manage the storage system"
                                 "\n2. View Storage"
@@ -50,33 +52,34 @@ def mainMenu():
             print("Invalid input! Must be a number between 1 to 3")
 
     if userInput == 1:
-        userInput = 1
-    if userInput == 2:
-        userInput = 2
-    if userInput == 3:
+        res = 1
+
+    elif userInput == 2:
+        res = 2
+
+    elif userInput == 3:
         exit()
 
-    return userInput
+    else:
+        print("Not an option!")
+
+    return res
 
 
 def loginOption():
-    isUser = False
-
     while True:
         userOption = checkForNum("1. Login - existing account"
                                  "\n2. Register - new account"
                                  "\n>>")
 
         if userOption == 1:
-            isUser = loginMenu()
+            loginMenu()
 
         elif userOption == 2:
             userRegMenu()
 
         else:
             print("Not an option!")
-
-    return isUser
 
 
 def loginMenu():
@@ -94,19 +97,27 @@ def loginMenu():
         password = input("Password: ")
 
         userData = open('loginData.txt', 'r')
-        data = userData.read().splitlines()
+        userName = []
+        userPass = []
 
-        userName, userPass = data[:2]
+        while True:
+            data = userData.readline().strip()
+            if data == "":
+                break
+            lineData = data.split(',')
+            userName.append(lineData[0])
+            userPass.append(lineData[1])
 
-        if name == userName and password == userPass:
-            print("Welcome " + userName)
-            isUser = True
-            break
+        print(data, userName, userPass)
+
+        if name in userName and password in userPass:
+            print("Welcome " + name)
+            manageMenu()
+            exit()
 
         else:
             print("Login Failed")
 
-    return isUser
 
 
 def userRegMenu():
@@ -175,36 +186,47 @@ def addAircraft():
 def removeAircraft():
     print("Please enter the registration number of the aircraft you want to remove")
     reg = input("Registration No.:")
-    sql = f"DELETE FROM aircraft WHERE {reg}"
-
-    mycursor.execute(sql)
+    sql = "DELETE FROM aircraft WHERE reg= %s"
+    mycursor.execute(sql, reg)
 
     mydb.commit()
 
 
 def updateAircraft():
     print("Please enter the registration number of the aircraft you want to remove")
-    reg = input("Registration No.:")
-    print("Select what you want to update")
-    userInput = checkForNum("1. Maker"
-                            "2. Series"
-                            "3. Price")
 
-    if userInput == 1:
-        maker = input("New Maker:")
-        sql = f"UPDATE student SET maker = {maker} WHERE reg = {reg}"
+    while True:
+        reg = input("Registration No.:")
+        print("Select what you want to update")
+        userInput = checkForNum("1. Maker"
+                                "2. Series"
+                                "3. Price"
+                                "4. Exit")
 
-    elif userInput == 2:
-        series = input("New Series:")
-        sql = f"UPDATE student SET series = {series} WHERE reg = {reg}"
+        if userInput == 1:
+            maker = input("New Maker:")
+            sql = "UPDATE student SET maker = %s WHERE reg = %s"
+            mycursor.execute(sql, maker, reg)
+            mydb.commit()
 
-    elif userInput == 3:
-        price = input("New Price:")
-        sql = f"UPDATE student SET price = {price} WHERE reg = {reg}"
+        elif userInput == 2:
+            series = input("New Series:")
+            sql = "UPDATE student SET series = %s WHERE reg = %s"
+            mycursor.execute(sql, series, reg)
+            mydb.commit()
 
-    mycursor.execute(sql)
+        elif userInput == 3:
+            price = input("New Price:")
+            sql = "UPDATE student SET price = %s WHERE reg = %s"
+            mycursor.execute(sql, price, reg)
+            mydb.commit()
 
-    mydb.commit()
+        elif userInput == 4:
+            exit()
+
+        else:
+            print("Not an option!")
+
 
 
 def main():
@@ -213,10 +235,7 @@ def main():
         mainMenuInput = mainMenu()
 
         if mainMenuInput == 1:
-            isUser = loginOption()
-
-            if isUser is True:
-                manageMenu()
+            loginOption()
 
         elif mainMenuInput == 2:
             displayAircraft()
@@ -224,4 +243,5 @@ def main():
         else:
             print("Not an option!")
 
-# main()
+
+main()
