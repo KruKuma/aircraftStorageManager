@@ -200,10 +200,12 @@ def removeAircraft():
     print("Please enter the registration number of the aircraft you want to remove")
     reg = input("Registration No.:")
     sql = "DELETE FROM aircraft WHERE reg= %s"
-    remove = reg
+    remove = (reg,)
     mycursor.execute(sql, remove)
 
     mydb.commit()
+
+    print("Aircraft Removal Successful")
 
 
 def updateAircraft():
@@ -233,7 +235,7 @@ def updateAircraft():
             mydb.commit()
 
         elif userInput == 3:
-            price = input("New Price:")
+            price = checkForNum("New Price:")
             sql = "UPDATE aircraft SET price =%s WHERE reg =%s"
             update = (price, reg)
             mycursor.execute(sql, update)
