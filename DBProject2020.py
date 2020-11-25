@@ -67,9 +67,11 @@ def mainMenu():
 
 
 def loginOption():
+    print("Please login or register an account")
     while True:
         userOption = checkForNum("1. Login - existing account"
                                  "\n2. Register - new account"
+                                 "\n3. Go back"
                                  "\n>>")
 
         if userOption == 1:
@@ -77,6 +79,9 @@ def loginOption():
 
         elif userOption == 2:
             userRegMenu()
+
+        elif userOption == 3:
+            mainMenu()
 
         else:
             print("Not an option!")
@@ -90,7 +95,7 @@ def loginMenu():
     isUser = False
 
     print("Welcome to our Aircraft Storage System"
-          "Please enter your user information")
+          "\nPlease enter your user information")
 
     while True:
         name = input("Username: ")
@@ -108,8 +113,6 @@ def loginMenu():
             userName.append(lineData[0])
             userPass.append(lineData[1])
 
-        print(data, userName, userPass)
-
         if name in userName and password in userPass:
             print("Welcome " + name)
             manageMenu()
@@ -117,7 +120,6 @@ def loginMenu():
 
         else:
             print("Login Failed")
-
 
 
 def userRegMenu():
@@ -136,7 +138,7 @@ def manageMenu():
                                 "\n2. Add Aircraft"
                                 "\n3. Remove Aircraft"
                                 "\n4. Update Aircraft"
-                                "\n5. Quit"
+                                "\n5. Logout"
                                 "\n>>")
 
         if userInput == 1:
@@ -152,7 +154,7 @@ def manageMenu():
             updateAircraft()
 
         elif userInput == 5:
-            break
+            loginOption()
 
         else:
             print("Not an option!")
@@ -226,7 +228,6 @@ def updateAircraft():
 
         else:
             print("Not an option!")
-
 
 
 def main():
