@@ -43,6 +43,11 @@ def checkForNum(prompt):
 
 
 def mainMenu():
+    """
+    Print out the option for the user in the main menu so that the user can choose if they want
+    the manage the system or view the current aircraft in storage.
+    :return:
+    """
     writeLine()
     print("Main Menu of Plane Storage System - Input an option")
 
@@ -60,19 +65,21 @@ def mainMenu():
     if userInput == 1:
         res = 1
 
-    elif userInput == 2:
+    if userInput == 2:
         res = 2
 
-    elif userInput == 3:
+    if userInput == 3:
         exit()
-
-    else:
-        print("Not an option!")
 
     return res
 
 
 def loginOption():
+    """
+    Print out the option for the user in the login menu giving the user the option to login
+    or register an account.
+    :return:
+    """
     writeLine()
     print("Please login or register an account")
     while True:
@@ -128,10 +135,13 @@ def loginMenu():
         else:
             print("Login Failed")
 
-    userData.close()
 
 
 def userRegMenu():
+    """
+    Print out the menu asking the user to input the username and password they want to register in the the database
+    :return:
+    """
     writeLine()
     print("Please enter the username and password you want to register")
     username = input("Username:")
@@ -145,6 +155,12 @@ def userRegMenu():
 
 
 def manageMenu():
+    """
+    Print out option for the user to choose how they want to manage the aircraft storage system. They can display,
+    add, remove and ypdate the aircraft storage system. It will they take them to another function that they
+    want or to exit from the menu
+    :return:
+    """
     writeLine()
     print("Please select from the option below")
     while True:
@@ -175,6 +191,10 @@ def manageMenu():
 
 
 def displayAircraft():
+    """
+    Print out the list of aircraft currently in storage in the database
+    :return:
+    """
     writeLine()
     mycursor.execute("SELECT * FROM aircraft")
 
@@ -185,6 +205,12 @@ def displayAircraft():
 
 
 def addAircraft():
+    """
+    Print out a menu asking for the user to input information about the aircraft they want to add.
+    It will ask the user to input the registration number, maker, series and price of the aircraft.
+    Then it will update it into the database.
+    :return:
+    """
     writeLine()
     print("Please enter the information of the aircraft")
     sqlFormula = "INSERT INTO aircraft VALUES (%s, %s, %s, %s)"
@@ -202,6 +228,11 @@ def addAircraft():
 
 
 def removeAircraft():
+    """
+    Print out the menu asking for the registration number of the aircraft the user want to remove.
+    Then it will update it into the database.
+    :return:
+    """
     writeLine()
     print("Please enter the registration number of the aircraft you want to remove")
     reg = input("Registration No.:")
@@ -215,6 +246,11 @@ def removeAircraft():
 
 
 def updateAircraft():
+    """
+    Print out the menu asking what the user want to update in the about the aircraft and it will ask
+    for the registration number of the aircraft. Then it will update it into the database.
+    :return:
+    """
     writeLine()
     while True:
         print("Select what you want to update")
