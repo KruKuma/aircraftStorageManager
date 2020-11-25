@@ -104,13 +104,13 @@ def loginMenu():
     print("Welcome to our Aircraft Storage System"
           "\nPlease enter your user information")
 
+    userData = open('loginData.txt', 'r')
+    userName = []
+    userPass = []
+
     while True:
         name = input("Username: ")
         password = input("Password: ")
-
-        userData = open('loginData.txt', 'r')
-        userName = []
-        userPass = []
 
         while True:
             data = userData.readline().strip()
@@ -128,19 +128,25 @@ def loginMenu():
         else:
             print("Login Failed")
 
+    userData.close()
+
 
 def userRegMenu():
     writeLine()
+    print("Please enter the username and password you want to register")
     username = input("Username:")
     password = input("Password:")
 
-    userData = open('loginData.txt', 'w')
+    userData = open('loginData.txt', 'a')
     print(f"{username},{password}", file=userData)
     print("User have been register! Please login!")
+
+    userData.close()
 
 
 def manageMenu():
     writeLine()
+    print("Please select from the option below")
     while True:
         userInput = checkForNum("1. Display Aircraft"
                                 "\n2. Add Aircraft"
