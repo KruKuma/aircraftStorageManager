@@ -167,8 +167,8 @@ def manage_menu():
     :return:
     """
     write_line()
-    print("\nPlease select from the option below")
     while True:
+        print("\nPlease select from the option below")
         userInput = check_for_num("\n1. Display Aircraft"       # Print out login option and prompt for input
                                   "\n2. Add Aircraft"
                                   "\n3. Remove Aircraft"
@@ -245,6 +245,8 @@ def remove_aircraft():
     :return:
     """
     write_line()
+    display_aircraft()
+    
     print("\nPlease enter the registration number of the aircraft you want to remove")
 
     # Prompt for registration number
@@ -272,6 +274,7 @@ def update_aircraft():
     write_line()
     while True:
         # Print out updating menu and prompt for input
+        display_aircraft()
         print("\nSelect what you want to update")
         userInput = check_for_num("\n1. Maker"
                                   "\n2. Series"
@@ -280,8 +283,9 @@ def update_aircraft():
                                   "\n>>")
         print("Please enter the registration number of the aircraft you want to update")
 
-        # Prompt for registration number
-        reg = input("Registration No.:")
+        if 0 < userInput < 4:
+            # Prompt for registration number
+            reg = input("Registration No.:")
 
         if userInput == 1:
             # Prompt for Maker
@@ -299,6 +303,8 @@ def update_aircraft():
 
             print("\nAircraft Successfully Updated!\n")
 
+            manage_menu()
+
         elif userInput == 2:
             # Prompt for Series
             series = input("New Series:")
@@ -315,6 +321,8 @@ def update_aircraft():
 
             print("\nAircraft Successfully Updated!\n")
 
+            manage_menu()
+
         elif userInput == 3:
             # Prompt for price
             price = check_for_num("New Price:")
@@ -330,6 +338,8 @@ def update_aircraft():
             mydb.commit()
 
             print("\nAircraft Successfully Updated!\n")
+
+            manage_menu()
 
         elif userInput == 4:
             manage_menu()
