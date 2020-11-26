@@ -332,7 +332,7 @@ def update_aircraft():
             print("\nAircraft Successfully Updated!\n")
 
         elif userInput == 4:
-            exit()
+            manage_menu()
 
         else:
             print("\nNot an option!\n")
